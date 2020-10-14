@@ -1,0 +1,18 @@
+{
+  "name": "deepclone",
+  "version": "0.0.1",
+  "description": "deep clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "keywords": [
+    "deepclone",
+    "mocha"
+  ],
+  "author": "huigeek",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^8.1.3"
+  }
+}
