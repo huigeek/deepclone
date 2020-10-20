@@ -34,3 +34,34 @@ yarn test
 1. 基本数据类型还未处理 Symbol
 2. 函数还没想到更好的方法
 3. 循环引用的情况未处理，应该使用 Map(WeakMap) 设置缓存，否则会栈溢出。
+
+## 补充
+如果拷贝的对象含有内置类型并且不包含函数，可以使用 Web API 中的 MessageChannel, 可以处理`undefined`和循环引用
+
+```
+function structureClone(obj){
+  return new Promise(resolve => {
+    const {port1, port2} = new MessageChannel()
+    // 这里是异步的
+    port2.onmessage = ev => resolve(ev.data)
+    port1.postMessage(obj)
+  })
+}
+
+var obj = {
+  a: undefined,
+  b: {
+    c: 2
+  }
+}
+
+obj.b.d = obj.b
+
+const test = async () => {
+  const clone = await structureClone(obj)
+  console.log('clone', clone)
+}
+
+test()
+
+```
